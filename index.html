@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<body style="margin:0;background:#020414;color:white;overflow:hidden">
+<canvas id="c"></canvas>
+<button id="b" style="position:fixed;bottom:30px;left:35%;padding:15px">
+🌌 Activer TN-SKY
+</button>
+<script>
+c.width=innerWidth;c.height=innerHeight;
+let a=0;
+let objets=["🌙 Lune","🪐 Saturne","🟠 Mars","🟣 Jupiter","🔵 Uranus","⭐ Altair"];
+
+function ciel(){
+let x=c.getContext("2d");
+x.fillStyle="#020414";x.fillRect(0,0,c.width,c.height);
+x.font="25px Arial";
+objets.forEach((o,i)=>x.fillText(o,(i*70-a)%c.width,c.height/2));
+requestAnimationFrame(ciel);
+}
+ciel();
+
+b.onclick=async()=>{
+if(DeviceOrientationEvent.requestPermission)
+await DeviceOrientationEvent.requestPermission();
+addEventListener("deviceorientation",e=>a=e.alpha||0);
+b.remove();
+};
+</script>
+</body>
+</html>
